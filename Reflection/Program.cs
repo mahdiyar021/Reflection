@@ -48,6 +48,8 @@ void methodref(ref int p)
 
 var cuntructInfo = typeof(string).GetConstructor([typeof(char[])]);
 
+var cuntructInfo2 = typeof(string).GetConstructor(BindingFlags.NonPublic, []); // for getting not public constructor
+
 char[] chars = ['c', 'b', 'a'];
 
 var str = cuntructInfo.Invoke([chars]);
