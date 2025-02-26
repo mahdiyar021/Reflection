@@ -36,9 +36,8 @@ var one = 1;
 
 methodref(ref one);
 
-static void methodref(ref int p)
+void methodref(ref int p)
 {
-    Console.WriteLine();
 
     Console.WriteLine(MethodInfo.GetCurrentMethod().Name);
 
@@ -46,3 +45,11 @@ static void methodref(ref int p)
 
     Console.WriteLine(paramName);
 }
+
+var cuntructInfo = typeof(string).GetConstructor([typeof(char[])]);
+
+char[] chars = ['c', 'b', 'a'];
+
+var str = cuntructInfo.Invoke([chars]);
+
+Console.WriteLine(str);
