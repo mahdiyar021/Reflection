@@ -1,6 +1,7 @@
 ﻿// testing for reflection 
 
 using System.Reflection;
+using System.Runtime.Intrinsics.X86;
 
 var intType = typeof(int);
 
@@ -55,3 +56,20 @@ char[] chars = ['c', 'b', 'a'];
 var str = cuntructInfo.Invoke([chars]);
 
 Console.WriteLine(str);
+
+
+
+funcint a = Cube;
+
+Console.WriteLine(a.DynamicInvoke(4));
+
+//funcint Ssse = (funcint)Delegate.CreateDelegate(typeof(funcint),new Program(), "Cube"); // work on low level statement
+//Console.WriteLine(Ssse(3));
+
+
+
+int Cube(int number) => number * number;
+
+delegate int funcint(int number);
+
+
