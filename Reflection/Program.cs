@@ -76,6 +76,12 @@ var info = typeof(Program).GetMethod(nameof(Program.ToString))!;
 var info2 = typeof(object).GetMethod(nameof(object.ToString))!;
 
 Console.WriteLine();
+Console.WriteLine(info.MethodHandle);  
+Console.WriteLine(info);  
+Console.WriteLine(info2.MethodHandle);
+Console.WriteLine(info2.MethodHandle == info.MethodHandle);
+Console.WriteLine(info2.MetadataToken == info.MetadataToken); // unique in assembly
+Console.WriteLine();
 Console.WriteLine(info.Module.Name);  // assembly name
 Console.WriteLine(info2.Module.Name); // assembly name
 Console.WriteLine(info2 == info);
@@ -90,11 +96,24 @@ Console.WriteLine(typeof(SqlConnection).BaseType);
 Console.WriteLine(typeof(SqlConnection).BaseType.BaseType);
 Console.WriteLine(typeof(SqlConnection).BaseType.BaseType.BaseType);
 
+var fields = typeof(Program).GetMembers();
 
+foreach (var field in fields)   
+    Console.WriteLine(field.Name);
 
+MemberInfo m = typeof(walnut).GetMember(nameof(walnut.Crack))[0];
+MethodInfo f = typeof(walnut).GetMethod(nameof(walnut.Crack))!;
+
+Console.WriteLine(((MethodInfo)m).ReturnType);
+Console.WriteLine(m == f) ;
 
 int Cube(int number) => number * number;
 
 delegate int funcint(int number);
 
+class walnut
+{
+    public int number;
+    public void Crack()=> number = 1;
+}
 
