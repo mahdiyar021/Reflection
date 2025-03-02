@@ -57,8 +57,6 @@ var str = cuntructInfo.Invoke([chars]);
 
 Console.WriteLine(str);
 
-
-
 funcint a = Cube;
 
 Console.WriteLine(a.DynamicInvoke(4));
@@ -66,6 +64,17 @@ Console.WriteLine(a.DynamicInvoke(4));
 //funcint Ssse = (funcint)Delegate.CreateDelegate(typeof(funcint),new Program(), "Cube"); // work on low level statement
 //Console.WriteLine(Ssse(3));
 
+
+var members = typeof(Program).GetMembers(); // its like get all prop , event , method , ctor ,nested type , type info
+
+Console.WriteLine();
+foreach (var member in members)
+    Console.WriteLine(member.Name);
+
+var info = typeof(Program).GetMethod(nameof(Program.ToString));
+
+Console.WriteLine(info.DeclaringType);
+Console.WriteLine(info.ReflectedType);
 
 
 int Cube(int number) => number * number;
