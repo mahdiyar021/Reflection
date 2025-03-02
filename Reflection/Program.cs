@@ -1,5 +1,6 @@
 ﻿// testing for reflection 
 
+using Microsoft.Data.SqlClient;
 using System.Reflection;
 using System.Runtime.Intrinsics.X86;
 
@@ -71,10 +72,25 @@ Console.WriteLine();
 foreach (var member in members)
     Console.WriteLine(member.Name);
 
-var info = typeof(Program).GetMethod(nameof(Program.ToString));
+var info = typeof(Program).GetMethod(nameof(Program.ToString))!;
+var info2 = typeof(object).GetMethod(nameof(object.ToString))!;
 
+Console.WriteLine();
+Console.WriteLine(info.Module.Name);  // assembly name
+Console.WriteLine(info2.Module.Name); // assembly name
+Console.WriteLine(info2 == info);
+Console.WriteLine();
 Console.WriteLine(info.DeclaringType);
 Console.WriteLine(info.ReflectedType);
+Console.WriteLine(info2.DeclaringType);
+Console.WriteLine(info2.ReflectedType);
+Console.WriteLine();
+
+Console.WriteLine(typeof(SqlConnection).BaseType);
+Console.WriteLine(typeof(SqlConnection).BaseType.BaseType);
+Console.WriteLine(typeof(SqlConnection).BaseType.BaseType.BaseType);
+
+
 
 
 int Cube(int number) => number * number;
