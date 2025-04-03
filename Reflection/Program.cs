@@ -115,7 +115,13 @@ Console.WriteLine(name);
 Console.WriteLine(m == f);
 
 foreach (var ass in AppDomain.CurrentDomain.GetAssemblies())
-    WriteLine(ass);
+{
+    WriteLine(ass.FullName);
+
+    foreach (var module in ass.Modules)
+        WriteLine("    " + module.Name);
+
+}
 
 
 
