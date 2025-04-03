@@ -1,9 +1,11 @@
 ﻿// testing for reflection 
 
 using Microsoft.Data.SqlClient;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.Intrinsics.X86;
-
+using static System.Console;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 var intType = typeof(int);
 
 var array = intType.MakeArrayType(3);
@@ -76,8 +78,8 @@ var info = typeof(Program).GetMethod(nameof(Program.ToString))!;
 var info2 = typeof(object).GetMethod(nameof(object.ToString))!;
 
 Console.WriteLine();
-Console.WriteLine(info.MethodHandle);  
-Console.WriteLine(info);  
+Console.WriteLine(info.MethodHandle);
+Console.WriteLine(info);
 Console.WriteLine(info2.MethodHandle);
 Console.WriteLine(info2.MethodHandle == info.MethodHandle);
 Console.WriteLine(info2.MetadataToken == info.MetadataToken); // unique in assembly
@@ -98,22 +100,46 @@ Console.WriteLine(typeof(SqlConnection).BaseType.BaseType.BaseType);
 
 var fields = typeof(Program).GetMembers();
 
-foreach (var field in fields)   
+foreach (var field in fields)
     Console.WriteLine(field.Name);
 
 MemberInfo m = typeof(walnut).GetMember(nameof(walnut.Crack))[0];
 MethodInfo f = typeof(walnut).GetMethod(nameof(walnut.Crack))!;
 
 Console.WriteLine(((MethodInfo)m).ReturnType);
-Console.WriteLine(m == f) ;
+
+var name = f.GetCustomAttributes().ToArray()[0].GetType().Name;
+
+Console.WriteLine(name);
+
+Console.WriteLine(m == f);
+
+foreach (var ass in AppDomain.CurrentDomain.GetAssemblies())
+    WriteLine(ass);
+
+
+
+Console.ReadKey();
 
 int Cube(int number) => number * number;
 
 delegate int funcint(int number);
 
+
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
+public sealed class TestAttribute(int number = 10) : Attribute
+{
+
+    public required string Name { get; set; }
+
+}
+
 class walnut
 {
     public int number;
-    public void Crack()=> number = 1;
+
+    [Test(Name ="ali")]
+    public void Crack() => number = 1;
 }
+
 
